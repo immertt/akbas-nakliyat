@@ -111,25 +111,25 @@ export default function AkbasNakliyat() {
   const projects = [
     {
       id: 1,
-      image: "/images/projects/1.jpg",
+      image: "/images/projects/1.webp",
       title: "Sanayi Yükü Taşıması",
       description: "Ağır sanayi malzemelerinin güvenli ve sabitlenmiş şekilde taşınması."
     },
     {
       id: 2,
-      image: "/images/projects/2.jpg",
+      image: "/images/projects/2.webp",
       title: "Fabrika Sevkiyatı",
       description: "Üretim tesislerinden zamanında ve sorunsuz teslimat."
     },
     {
       id: 3,
-      image: "/images/projects/3.jpg",
+      image: "/images/projects/3.webp",
       title: "Şehirler Arası Nakliye",
       description: "Uzun mesafe taşımacılıkta planlı ve güvenli teslimat."
     },
     {
       id: 4,
-      image: "/images/projects/4.jpg",
+      image: "/images/projects/4.webp",
       title: "Özel Proje Taşıması",
       description: "Ölçüsü/ağırlığı özel yükler için kontrollü taşıma."
     }
@@ -200,11 +200,10 @@ export default function AkbasNakliyat() {
             {/* Logo */}
             <a href="#anasayfa" className="flex items-center gap-0.3 group cursor-pointer">
               <Image
-                src="/images/logom.png"
+                src="/images/logom.webp"
                 alt="Akbaş Nakliyat Logo"
                 width={64}
                 height={64}
-                priority
                 className="w-14 h-14 md:w-16 md:h-16 object-contain mt-1.5"
               />
 
@@ -239,19 +238,28 @@ export default function AkbasNakliyat() {
       {/* Hero Section with Parallax */}
       <section id="anasayfa" className="relative pt-24 pb-16 px-4 min-h-[calc(100vh-80px)] flex items-start">
         {/* Cinematic Background Image */}
-        <div
-          className="absolute inset-0 z-0 bg-center bg-cover"
-          style={{ backgroundImage: "url('/images/2.jpg')" }}
-        />
-        {/* Dark Overlay for readability */}
-        <div className="absolute right-10 top-1/2 -translate-y-1/2 w-[400px] h-[400px] opacity-[0.05] pointer-events-none select-none">
+        <div className="absolute inset-0 z-0">
           <Image
-            src="/images/logom.png"
+            src="/images/2.webp"
             alt="Akbaş Nakliyat"
             fill
-            sizes="400px"
-            className="object-contain"
+            priority
+            sizes="100vw"
+            quality={75}
+            className="object-cover"
           />
+        </div>
+
+        {/* Dark Overlay for readability */}
+        <div className="absolute right-10 top-1/2 -translate-y-1/2 w-[400px] h-[400px] opacity-[0.05] pointer-events-none select-none">
+        <Image
+          src="/images/logom.webp"
+          alt="Akbaş Nakliyat Sanayi Taşımacılığı"
+          fill
+          sizes="100vw"
+          quality={85}
+          className="object-cover"
+        />
         </div>
 
         <div className="max-w-7xl mx-auto relative z-20">
@@ -746,7 +754,6 @@ export default function AkbasNakliyat() {
                 fill
                 sizes="90vw"
                 className="object-contain"
-                priority
               />
             </div>
 
@@ -791,7 +798,7 @@ export default function AkbasNakliyat() {
           <div className="text-center">
             <div className="flex items-center justify-center space-x-3 mb-4">
               <Image
-                src="/images/logom.png"
+                src="/images/logom.webp"
                 alt="Akbaş Nakliyat Logo"
                 width={40}
                 height={40}

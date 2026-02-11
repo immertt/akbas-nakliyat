@@ -1,7 +1,17 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  compiler: {
+    styledComponents: false,
+  },
+
+  images: {
+    formats: ["image/avif", "image/webp"],
+  },
+
+  compress: true,
+  reactStrictMode: true,
+  poweredByHeader: false,
 };
 
 export default nextConfig;

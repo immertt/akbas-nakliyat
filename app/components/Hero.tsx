@@ -91,7 +91,7 @@ export default function Hero() {
                 className="px-8 py-4 bg-slate-800/50 border-2 border-slate-700 rounded-xl font-bold text-lg flex items-center space-x-2"
               >
                 <Phone className="w-6 h-6 text-orange-400" />
-                <span>0532 123 12 34</span>
+                <span>0532 442 09 87</span>
               </a>
             </div>
 

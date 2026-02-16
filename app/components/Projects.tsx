@@ -69,7 +69,7 @@ export default function Projects() {
                   src={project.image}
                   alt={project.title}
                   fill
-                  sizes="100vw"
+                  sizes="(max-width: 768px) 100vw, 700px"
                   className="object-contain"
                 />
 

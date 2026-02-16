@@ -14,6 +14,7 @@ export default function Hero() {
           alt="Akbaş Nakliyat"
           fill
           priority
+          fetchPriority="high"
           sizes="100vw"
           quality={70}
           className="object-cover"

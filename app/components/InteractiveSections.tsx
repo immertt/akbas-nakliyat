@@ -198,9 +198,9 @@ export default function InteractiveSections() {
                     <service.icon className="w-full h-full text-white" />
                   </div>
                   
-                  <h4 className="text-2xl font-bold mb-3 group-hover:text-orange-400 transition-colors">
+                  <h2 className="text-2xl font-bold mb-3 group-hover:text-orange-400 transition-colors">
                     {service.title}
-                  </h4>
+                  </h2>
                   <p className="text-slate-400 leading-relaxed">{service.desc}</p>
                 </div>
 
@@ -288,7 +288,7 @@ export default function InteractiveSections() {
           
           {/* Review Form */}
           <div className="max-w-2xl mx-auto mb-12 bg-gradient-to-br from-slate-900/80 to-slate-800/80 backdrop-blur-sm rounded-2xl p-8 border border-orange-500/30 shadow-2xl">
-            <h4 className="text-2xl font-bold mb-6 text-orange-400">✨ Deneyiminizi Paylaşın</h4>
+            <h2 className="text-2xl font-bold mb-6 text-orange-400">✨ Deneyiminizi Paylaşın</h2>
             <div className="space-y-4">
               <input
                 type="text"
@@ -337,7 +337,7 @@ export default function InteractiveSections() {
                    className="bg-slate-900/50 backdrop-blur-sm rounded-xl p-6 border border-slate-700/50 hover:border-orange-500/50 transition-all transform hover:scale-105 hover:-translate-y-1">
                 <div className="flex items-start justify-between mb-3">
                   <div>
-                    <h5 className="font-bold text-lg text-orange-400">{review.name}</h5>
+                    <h3 className="font-bold text-lg text-orange-400">{review.name}</h3>
                     {review.company && <p className="text-sm text-slate-400">{review.company}</p>}
                   </div>
                   <div className="flex">
@@ -415,14 +415,14 @@ export default function InteractiveSections() {
         target="_blank"
         rel="noopener noreferrer"
         className="
-          fixed bottom-6 right-6 z-[9999]
-          flex items-center gap-3
-          bg-green-500 hover:bg-green-600
-          text-white font-semibold
-          px-6 py-3 rounded-full
-          shadow-xl shadow-green-500/40
-          transition-all duration-300
-          hover:scale-105
+        fixed bottom-6 right-6 z-[9999]
+        flex items-center gap-3
+        bg-green-700 hover:bg-green-800
+        text-white font-semibold
+        px-6 py-3 rounded-full
+        shadow-xl shadow-green-900/40
+        transition-all duration-300
+        hover:scale-105
         "
       >
         <MessageCircle className="w-5 h-5" />
@@ -445,7 +445,7 @@ export default function InteractiveSections() {
               <h2 className="text-2xl font-bold text-white">AKBAŞ NAKLİYAT</h2>
             </div>
             <p className="text-slate-400 mb-2">&copy; 2026 Akbaş Nakliyat. Tüm hakları saklıdır.</p>
-            <p className="text-sm text-slate-500">Kayseri merkezli • Türkiye genelinde güvenli taşımacılık</p>
+            <p className="text-sm text-slate-400">Kayseri merkezli • Türkiye genelinde güvenli taşımacılık</p>
             <div className="mt-6 flex justify-center space-x-6">
                 <a
                 href={`tel:+${process.env.NEXT_PUBLIC_PHONE}`}

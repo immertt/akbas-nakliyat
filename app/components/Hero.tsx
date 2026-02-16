@@ -15,10 +15,14 @@ export default function Hero() {
           fill
           priority
           sizes="100vw"
-          quality={75}
+          quality={70}
           className="object-cover"
         />
       </div>
+
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black/60 z-10" />
+
 
       {/* Dark Overlay Logo */}
       <div className="absolute right-10 top-1/2 -translate-y-1/2 w-[400px] h-[400px] opacity-[0.05] pointer-events-none select-none">
@@ -35,7 +39,7 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto relative z-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8 animate-fade-in">
-            <h2 className="text-5xl lg:text-6xl font-extrabold leading-tight">
+            <h1 className="text-5xl lg:text-6xl font-extrabold leading-tight">
               <span className="bg-gradient-to-r from-white via-orange-100 to-orange-500 bg-clip-text text-transparent">
                 Sanayi Taşımacılığında
               </span>{" "}
@@ -43,9 +47,9 @@ export default function Hero() {
               <span className="bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
                 Profesyonel Çözüm
               </span>
-            </h2>
+            </h1>
 
-            <p className="text-xl text-slate-300 leading-relaxed">
+            <p className="text-xl text-white/90 leading-relaxed">
               Demir, çelik ve ağır sanayi malzemelerinizi{" "}
               <span className="text-orange-400 font-semibold">güvenle</span>{" "}
               taşıyorum. Tek araçla,{" "}
@@ -63,7 +67,7 @@ export default function Hero() {
               ].map((item, i) => (
                 <div
                   key={i}
-                  className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-full bg-slate-800/40 border border-slate-700/50 text-slate-200 backdrop-blur-md shadow-sm"
+                  className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-full bg-black/40 border border-slate-600 text-white backdrop-blur-md shadow-sm"
                 >
                   <span className="text-orange-500">{item.icon}</span>
                   {item.text}

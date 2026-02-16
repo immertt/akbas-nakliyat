@@ -181,9 +181,9 @@ export default function InteractiveSections() {
       <section id="hizmetler" ref={registerSection} className="fade-in-section py-24 px-4 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h3 className="text-5xl font-black mb-4 bg-gradient-to-r from-white to-orange-400 bg-clip-text text-transparent">
+            <h2 className="text-5xl font-black mb-4 bg-gradient-to-r from-white to-orange-400 bg-clip-text text-transparent">
               Hizmetlerimiz
-            </h3>
+            </h2>
             <p className="text-xl text-slate-400">Profesyonel taşımacılık çözümleri</p>
           </div>
           
@@ -280,9 +280,9 @@ export default function InteractiveSections() {
       <section ref={registerSection} className="fade-in-section py-24 px-4 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h3 className="text-5xl font-black mb-4 bg-gradient-to-r from-white to-purple-400 bg-clip-text text-transparent">
+            <h2 className="text-5xl font-black mb-4 bg-gradient-to-r from-white to-purple-400 bg-clip-text text-transparent">
               Müşteri Yorumları
-            </h3>
+            </h2>
             <p className="text-xl text-slate-400">Müşterilerimiz ne diyor?</p>
           </div>
           
@@ -397,6 +397,7 @@ export default function InteractiveSections() {
 
         <div className="max-w-6xl mx-auto rounded-3xl overflow-hidden border border-slate-800 shadow-2xl">
           <iframe
+            title="Akbaş Nakliyat Kayseri Harita Konumu"
             src="https://www.google.com/maps?q=Kayseri&output=embed"
             width="100%"
             height="450"

@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     siteName: "Akbaş Nakliyat",
     images: [
       {
-        url: "/images/projects/1.jpg",
+        url: "/images/projects/1.webp",
         width: 1200,
         height: 630,
         alt: "Akbaş Nakliyat Taşımacılık Hizmeti",

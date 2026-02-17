@@ -1,5 +1,5 @@
-import InteractiveSections from "./components/InteractiveSections";
+  import InteractiveSections from "./components/InteractiveSections";
 
-export default function Page() {
-  return <InteractiveSections />;
-}
+  export default function Page() {
+    return <InteractiveSections />;
+  }

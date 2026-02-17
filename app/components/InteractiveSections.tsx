@@ -1,10 +1,12 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react';
-import { Truck, Shield, Clock, Star, Phone, MessageCircle, Package, MapPin, CheckCircle, Zap, TrendingUp } from 'lucide-react';
+import { Truck, Shield, Clock, Star, Phone, MessageCircle, Package, MapPin, Zap, TrendingUp } from 'lucide-react';
 import Image from "next/image";
 import Hero from "./Hero";
 import Projects from "./Projects";
+import ReviewForm from "./ReviewForm";
+
 
 
 type Review = {
@@ -17,22 +19,7 @@ type Review = {
 export default function InteractiveSections() {
   const [activeService, setActiveService] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [formData, setFormData] = useState({ name: '', company: '', message: '', rating: 5 });
-  const [reviews, setReviews] = useState<Review[]>([
-  {
-    name: "Mehmet Yılmaz",
-    company: "Demir Çelik A.Ş.",
-    rating: 5,
-    text: "Zamanlama ve güvenlik konusunda mükemmel hizmet. Ağır yüklerimizi sorunsuz taşıdılar."
-  },
-  {
-    name: "Ayşe Kaya",
-    company: "Makine Sanayi Ltd.",
-    rating: 5,
-    text: "Profesyonel ve güvenilir. Kayseri'de en iyi nakliye hizmeti!"
-  }
-]);
-
+  const [approvedReviews, setApprovedReviews] = useState<Review[]>([]);
 
   const sectionsRef = useRef<Set<HTMLElement>>(new Set());
 
@@ -64,12 +51,23 @@ export default function InteractiveSections() {
         });
     };
 
+
     window.addEventListener('scroll', handleScroll);
     handleScroll();
 
     const interval = setInterval(() => {
-        setActiveService(prev => (prev + 1) % 3);
-    }, 4000);
+          setActiveService(prev => (prev + 1) % 3);
+      }, 4000);
+
+      const fetchApproved = async () => {
+      const res = await fetch("/api/reviews");
+      const json = await res.json();
+      if (json.data) {
+        setApprovedReviews(json.data);
+      }
+    };
+
+    fetchApproved();
 
     return () => {
         window.removeEventListener('scroll', handleScroll);
@@ -108,21 +106,6 @@ export default function InteractiveSections() {
     { icon: Zap, title: "Hızlı Hizmet", desc: "Acil nakliye talepleriniz için anında çözüm", color: "text-yellow-400" },
     { icon: TrendingUp, title: "Uygun Fiyat", desc: "Kaliteli hizmet, rekabetçi fiyatlar", color: "text-orange-400" }
   ];
-
-  const handleSubmit = () => {
-  if (formData.name && formData.message) {
-    const newReview: Review = {
-      name: formData.name,
-      company: formData.company || undefined,
-      rating: formData.rating,
-      text: formData.message
-    };
-
-    setReviews(prev => [newReview, ...prev]);
-
-    setFormData({ name: '', company: '', message: '', rating: 5 });
-  }
-};
 
   return (
     <div className="min-h-screen bg-slate-950 text-white overflow-hidden">
@@ -266,7 +249,7 @@ export default function InteractiveSections() {
                    className="group bg-slate-900/50 backdrop-blur-sm rounded-xl p-6 border border-slate-700/50 hover:border-orange-500/50 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 cursor-pointer"
                    style={{animationDelay: `${idx * 100}ms`}}>
                 <feature.icon className={`w-12 h-12 ${feature.color} mb-4 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300`}/>
-                <h5 className="text-xl font-bold mb-2 group-hover:text-orange-400 transition-colors">{feature.title}</h5>
+                <h4 className="text-xl font-bold mb-2 group-hover:text-orange-400 transition-colors">{feature.title}</h4>
                 <p className="text-slate-400 text-sm leading-relaxed">{feature.desc}</p>
               </div>
             ))}
@@ -287,52 +270,11 @@ export default function InteractiveSections() {
           </div>
           
           {/* Review Form */}
-          <div className="max-w-2xl mx-auto mb-12 bg-gradient-to-br from-slate-900/80 to-slate-800/80 backdrop-blur-sm rounded-2xl p-8 border border-orange-500/30 shadow-2xl">
-            <h2 className="text-2xl font-bold mb-6 text-orange-400">✨ Deneyiminizi Paylaşın</h2>
-            <div className="space-y-4">
-              <input
-                type="text"
-                placeholder="Adınız Soyadınız *"
-                value={formData.name}
-                onChange={(e) => setFormData({...formData, name: e.target.value})}
-                className="w-full bg-slate-800/80 border border-slate-700 rounded-xl px-4 py-3 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/50 focus:outline-none transition-all"
-              />
-              <input
-                type="text"
-                placeholder="Firma Adı (İsteğe bağlı)"
-                value={formData.company}
-                onChange={(e) => setFormData({...formData, company: e.target.value})}
-                className="w-full bg-slate-800/80 border border-slate-700 rounded-xl px-4 py-3 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/50 focus:outline-none transition-all"
-              />
-              <div>
-                <label className="block mb-2 text-sm text-slate-400 font-semibold">Değerlendirme</label>
-                <div className="flex space-x-2">
-                  {[1,2,3,4,5].map(star => (
-                    <Star
-                      key={star}
-                      className={`w-10 h-10 cursor-pointer transition-all transform hover:scale-125 ${star <= formData.rating ? 'text-orange-500 fill-orange-500' : 'text-slate-600'}`}
-                      onClick={() => setFormData({...formData, rating: star})}
-                    />
-                  ))}
-                </div>
-              </div>
-              <textarea
-                placeholder="Yorumunuz *"
-                value={formData.message}
-                onChange={(e) => setFormData({...formData, message: e.target.value})}
-                rows={4}
-                className="w-full bg-slate-800/80 border border-slate-700 rounded-xl px-4 py-3 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/50 focus:outline-none resize-none transition-all"
-              ></textarea>
-              <button onClick={handleSubmit} 
-                      className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 py-4 rounded-xl font-bold text-lg transition-all transform hover:scale-105 shadow-lg shadow-orange-500/50">
-                📤 Yorumu Gönder
-              </button>
-            </div>
-          </div>
+          <ReviewForm /> 
 
           {/* Review List */}
           <div className="grid md:grid-cols-2 gap-6">
-            {reviews.map((review, idx) => (
+            {approvedReviews.map((review, idx) => (
               <div key={idx} 
                    className="bg-slate-900/50 backdrop-blur-sm rounded-xl p-6 border border-slate-700/50 hover:border-orange-500/50 transition-all transform hover:scale-105 hover:-translate-y-1">
                 <div className="flex items-start justify-between mb-3">

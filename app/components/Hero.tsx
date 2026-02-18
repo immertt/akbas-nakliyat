@@ -17,6 +17,7 @@ export default function Hero() {
           fetchPriority="high"
           sizes="100vw"
           quality={70}
+          unoptimized
           className="object-cover"
         />
       </div>
@@ -56,6 +57,7 @@ export default function Hero() {
               width={1200}
               height={800}
               className="w-full h-auto rounded-xl"
+              unoptimized
               priority
             />
           </div>

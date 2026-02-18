@@ -7,7 +7,7 @@
   "theme_color": "#f97316",
   "icons": [
     {
-      "src": "/images/logom.png",
+      "src": "/images/logom.webp",
       "sizes": "192x192",
       "type": "image/png"
     }

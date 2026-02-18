@@ -1,22 +1,8 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
 import { supabaseServer } from "@/lib/supabase/server";
+import { isAdminEmail } from "@/lib/auth/isAdmin";
 
 
-
-function isAdminEmail(email?: string | null) {
-  if (!email) return false;
-  const allow = (process.env.ADMIN_EMAILS || "")
-    .split(",")
-    .map((s) => s.trim().toLowerCase())
-    .filter(Boolean);
-  return allow.includes(email.toLowerCase());
-}
-
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY! // sadece server
-);
 
 export async function GET() {
   const supabase = await supabaseServer();
@@ -26,7 +12,7 @@ export async function GET() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { data: rows, error } = await supabaseAdmin
+  const { data: rows, error } = await supabase
     .from("reviews")
     .select("*")
     .order("created_at", { ascending: false });
@@ -48,7 +34,7 @@ export async function PATCH(req: Request) {
 
   const { id, approved } = body;
 
-  const { error } = await supabaseAdmin
+  const { error } = await supabase
     .from("reviews")
     .update({ approved })
     .eq("id", id);
@@ -70,7 +56,7 @@ export async function DELETE(req: Request) {
 
   const { id } = body;
 
-  const { error } = await supabaseAdmin
+  const { error } = await supabase
     .from("reviews")
     .delete()
     .eq("id", id);

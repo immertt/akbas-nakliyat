@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Akbaş Nakliyat",
     description: "Türkiye genelinde profesyonel nakliye hizmeti.",
-    images: ["/images/projects/1.jpg"],
+    images: ["/images/projects/1.webp"],
   },
 
   robots: {

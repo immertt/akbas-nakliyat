@@ -1,6 +1,8 @@
 import { redirect } from "next/navigation";
 import { supabaseServer } from "@/lib/supabase/server";
 import AdminDashboardClient from "./AdminDashboardClient";
+import { isAdminEmail } from "@/lib/auth/isAdmin";
+
 
 export default async function AdminPage() {
   const supabase = await supabaseServer();
@@ -13,10 +15,10 @@ export default async function AdminPage() {
     redirect("/admin/login");
   }
 
-  // ✅ SADECE SENİN MAİLİN GİREBİLSİN
-  if (session.user.email !== process.env.ADMIN_EMAIL) {
+  if (!isAdminEmail(session.user.email)) {
     redirect("/");
   }
+
 
   return <AdminDashboardClient />;
 }

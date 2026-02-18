@@ -94,7 +94,7 @@ export async function POST(req: Request) {
     });
 
     await resend.emails.send({
-        from: "Akbas Nakliyat <onboarding@resend.dev>",
+        from: "Akbas Nakliyat <info@akbasnakliyat.com>",
         to: process.env.ADMIN_NOTIFY_EMAIL!,
         subject: "Yeni yorum bekliyor",
         html: `
@@ -105,7 +105,7 @@ export async function POST(req: Request) {
             <p><strong>Yorum:</strong></p>
             <p>${text}</p>
             <hr />
-            <a href="http://localhost:3000/admin">Admin Panel</a>
+            <a href="${process.env.NEXT_PUBLIC_SITE_URL}/admin">Admin Panel</a>
         `,
     });
 

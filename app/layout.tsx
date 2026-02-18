@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://example.com"
+    process.env.NEXT_PUBLIC_SITE_URL || "https://akbasnakliyat.com"
   ),
 
   title: {
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     title: "Akbaş Nakliyat | Güvenli ve Profesyonel Taşımacılık",
     description:
       "Türkiye genelinde sanayi taşımacılığı, şehir içi ve şehirler arası nakliye hizmeti.",
-    url: process.env.NEXT_PUBLIC_SITE_URL || "https://example.com",
+    url: process.env.NEXT_PUBLIC_SITE_URL || "https://akbasnakliyat.com",
     siteName: "Akbaş Nakliyat",
     images: [
       {

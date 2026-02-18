@@ -5,10 +5,10 @@ export default function Hero() {
   return (
     <section
       id="anasayfa"
-      className="relative pt-24 pb-16 px-4 min-h-[calc(100vh-80px)] flex items-start"
+      className="relative pt-24 pb-16 px-4 flex items-start"
     >
       {/* Cinematic Background Image */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 hidden xl:block min-h-[calc(100vh-80px)]">
         <Image
           src="/images/2.webp"
           alt="Akbaş Nakliyat"
@@ -40,7 +40,7 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto relative z-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8 animate-fade-in">
-            <h1 className="text-5xl lg:text-6xl font-extrabold leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight">
               <span className="bg-gradient-to-r from-white via-orange-100 to-orange-500 bg-clip-text text-transparent">
                 Sanayi Taşımacılığında
               </span>{" "}
@@ -49,6 +49,16 @@ export default function Hero() {
                 Profesyonel Çözüm
               </span>
             </h1>
+            <div className="xl:hidden mb-6">
+            <Image
+              src="/images/2.webp"
+              alt="Akbaş Nakliyat"
+              width={1200}
+              height={800}
+              className="w-full h-auto rounded-xl"
+              priority
+            />
+          </div>
 
             <p className="text-xl text-white/90 leading-relaxed">
               Demir, çelik ve ağır sanayi malzemelerinizi{" "}

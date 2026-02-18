@@ -26,6 +26,7 @@ export default function AdminDashboard() {
 
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
+  const [reviewToDelete, setReviewToDelete] = useState<string | null>(null);
 
   async function fetchReviews() {
     const res = await fetch("/api/admin/reviews");
@@ -48,15 +49,19 @@ export default function AdminDashboard() {
     fetchReviews();
   }
 
-  async function deleteReview(id: string) {
+  async function confirmDelete() {
+    if (!reviewToDelete) return;
+
     await fetch("/api/admin/reviews", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id }),
+      body: JSON.stringify({ id: reviewToDelete }),
     });
 
+    setReviewToDelete(null);
     fetchReviews();
   }
+
 
   useEffect(() => {
     fetchReviews();
@@ -118,14 +123,40 @@ export default function AdminDashboard() {
                 </button>
 
                 <button
-                  onClick={() => deleteReview(review.id)}
+                  onClick={() => setReviewToDelete(review.id)}
                   className="bg-red-600 px-3 py-1 rounded"
                 >
                   Sil
                 </button>
+
               </div>
             </div>
           ))}
+        </div>
+      )}
+      {reviewToDelete && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+          <div className="bg-slate-800 p-6 rounded-lg w-[350px] space-y-4">
+            <h2 className="text-lg font-bold text-white">
+              Yorumu silmek istediğinize emin misiniz?
+            </h2>
+
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setReviewToDelete(null)}
+                className="bg-slate-600 px-4 py-2 rounded"
+              >
+                Vazgeç
+              </button>
+
+              <button
+                onClick={confirmDelete}
+                className="bg-red-600 px-4 py-2 rounded"
+              >
+                Evet, Sil
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

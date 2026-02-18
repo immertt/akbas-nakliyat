@@ -92,6 +92,8 @@ export async function POST(req: Request) {
       rating,
       text,
     });
+    
+    console.log("ENV SITE_URL:", process.env.NEXT_PUBLIC_SITE_URL);
 
     await resend.emails.send({
         from: "Akbas Nakliyat <info@akbasnakliyat.com>",

@@ -46,7 +46,7 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   try {
-    // ✅ 2.1 Rate limit kontrol (en baş)
+    // 1️⃣ Rate limit
     const ip = getIP(req);
     const now = Date.now();
     const prev = rateLimit.get(ip);
@@ -58,66 +58,87 @@ export async function POST(req: Request) {
     }
     rateLimit.set(ip, now);
 
-    // ✅ 2.2 Body parse
+    // 2️⃣ Body parse
     const body = await req.json();
 
-    // ✅ 2.3 Alanları çıkar
     const name = String(body.name || "").trim();
     const company = String(body.company || "").trim();
     const rating = Number(body.rating || 0);
     const text = String(body.text || "").trim();
 
-    // ✅ 2.4 Honeypot (varsa)
+    // 3️⃣ Honeypot
     const website = String(body.website || "").trim();
     if (website) return NextResponse.json({ ok: true });
 
-    // ✅ 2.5 VALIDATION BLOĞU (İŞTE BURAYA)
+    // 4️⃣ Validation
     if (name.length < 2) {
       return NextResponse.json({ error: "İsim çok kısa" }, { status: 400 });
     }
 
-    // ✅ SENİN SORDUĞUN SATIR TAM OLARAK BURAYA
     if (text.length < 10) {
       return NextResponse.json({ error: "Yorum çok kısa" }, { status: 400 });
     }
 
     if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
-      return NextResponse.json({ error: "Puan 1-5 arası olmalı" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Puan 1-5 arası olmalı" },
+        { status: 400 }
+      );
     }
 
-    // ✅ 2.6 Insert (validation sonrası)
-    const { error } = await supabase.from("reviews").insert({
+    // 5️⃣ Supabase insert
+    const { error: insertError } = await supabase.from("reviews").insert({
       name,
       company: company || null,
       rating,
       text,
     });
-    
-    console.log("ENV SITE_URL:", process.env.NEXT_PUBLIC_SITE_URL);
 
-    await resend.emails.send({
-        from: "Akbas Nakliyat <info@akbasnakliyat.com>",
+    if (insertError) {
+      console.error("SUPABASE INSERT FAIL:", insertError);
+      return NextResponse.json(
+        { error: insertError.message },
+        { status: 500 }
+      );
+    }
+
+    // 6️⃣ Domain’i request origin’den alıyoruz (env bağımlılığı bitiyor)
+    const origin = new URL(req.url).origin;
+    const adminUrl = new URL("/admin/login", origin).toString();
+
+    console.log("ENV CHECK:", {
+      origin,
+      resendKey: !!process.env.RESEND_API_KEY,
+      notifyTo: !!process.env.ADMIN_NOTIFY_EMAIL,
+    });
+
+    // 7️⃣ Mail gönderimi (try/catch ile)
+    try {
+      const result = await resend.emails.send({
+        from: "Akbas Nakliyat <onboarding@resend.dev>", // test için güvenli adres
         to: process.env.ADMIN_NOTIFY_EMAIL!,
         subject: "Yeni yorum bekliyor",
         html: `
-            <h2>Yeni yorum geldi</h2>
-            <p><strong>İsim:</strong> ${name}</p>
-            <p><strong>Firma:</strong> ${company || "-"}</p>
-            <p><strong>Puan:</strong> ${rating}</p>
-            <p><strong>Yorum:</strong></p>
-            <p>${text}</p>
-            <hr />
-            <a href="${process.env.NEXT_PUBLIC_SITE_URL}/admin">Admin Panel</a>
+          <h2>Yeni yorum geldi</h2>
+          <p><strong>İsim:</strong> ${name}</p>
+          <p><strong>Firma:</strong> ${company || "-"}</p>
+          <p><strong>Puan:</strong> ${rating}</p>
+          <p><strong>Yorum:</strong></p>
+          <p>${text}</p>
+          <hr />
+          <a href="${adminUrl}">Admin Panel</a>
         `,
-    });
+      });
 
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      console.log("RESEND OK:", result);
+    } catch (e) {
+      console.error("RESEND FAIL:", e);
+      // Mail fail olsa bile yorumu kaydettik, sistem çalışmaya devam eder
     }
 
     return NextResponse.json({ ok: true });
-  } catch {
+  } catch (e) {
+    console.error("POST /api/reviews FAIL:", e);
     return NextResponse.json({ error: "Bad request" }, { status: 400 });
   }
 }
-
